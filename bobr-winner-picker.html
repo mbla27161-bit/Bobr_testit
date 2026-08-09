@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BOBR TESTIT — Выбор победителей</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&display=swap');
+
+    :root {
+      --yellow: #FFD100;
+      --dark: #2A1A0A;
+      --brown: #5C3A1E;
+      --white: #FFFFFF;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: var(--yellow);
+      color: var(--dark);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 520px;
+      width: 100%;
+      background: var(--white);
+      border-radius: 24px;
+      box-shadow: 0 12px 40px rgba(42, 26, 10, 0.18);
+      overflow: hidden;
+    }
+
+    .header {
+      background: var(--yellow);
+      padding: 28px 20px 20px;
+      text-align: center;
+      border-bottom: 4px solid var(--dark);
+    }
+
+    .logo {
+      width: 140px;
+      height: auto;
+      margin-bottom: 12px;
+      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.15));
+    }
+
+    .title {
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      color: var(--dark);
+      text-transform: uppercase;
+    }
+
+    .subtitle {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--brown);
+      margin-top: 4px;
+      letter-spacing: 2px;
+    }
+
+    .content {
+      padding: 24px 20px 32px;
+    }
+
+    label {
+      display: block;
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--dark);
+    }
+
+    textarea {
+      width: 100%;
+      height: 160px;
+      padding: 14px;
+      border: 3px solid var(--dark);
+      border-radius: 14px;
+      font-family: inherit;
+      font-size: 14px;
+      resize: vertical;
+      background: #FFFDF5;
+      margin-bottom: 18px;
+    }
+
+    .controls {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .controls label {
+      margin-bottom: 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    input[type="number"] {
+      width: 70px;
+      padding: 10px;
+      border: 3px solid var(--dark);
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: 700;
+      text-align: center;
+      background: #FFFDF5;
+    }
+
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 16px;
+      background: var(--dark);
+      color: var(--yellow);
+      border: none;
+      border-radius: 14px;
+      font-size: 18px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: transform 0.15s, background 0.15s;
+      margin-bottom: 12px;
+    }
+
+    .btn:hover {
+      background: #3d2a15;
+      transform: translateY(-2px);
+    }
+
+    .btn:active {
+      transform: translateY(0);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--dark);
+      border: 3px solid var(--dark);
+    }
+
+    .btn-secondary:hover {
+      background: var(--yellow);
+    }
+
+    .stats {
+      font-size: 13px;
+      color: var(--brown);
+      text-align: center;
+      margin-bottom: 16px;
+    }
+
+    .winners-box {
+      display: none;
+      margin-top: 20px;
+      padding: 20px;
+      background: var(--yellow);
+      border-radius: 16px;
+      border: 3px solid var(--dark);
+      text-align: center;
+    }
+
+    .winners-box h2 {
+      font-size: 18px;
+      margin-bottom: 16px;
+      text-transform: uppercase;
+    }
+
+    .winner-item {
+      background: var(--white);
+      margin: 8px 0;
+      padding: 12px 16px;
+      border-radius: 12px;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--dark);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      animation: popIn 0.4s ease forwards;
+      opacity: 0;
+      transform: scale(0.8);
+    }
+
+    @keyframes popIn {
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 24px;
+      font-size: 12px;
+      color: var(--brown);
+    }
+
+    .footer a {
+      color: var(--dark);
+      font-weight: 700;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <!-- Логотип лежит рядом с этим файлом -->
+      <img src="logo.jpg" alt="BOBR TESTIT" class="logo" onerror="this.style.display='none'">
+      <div class="title">BOBR TESTIT</div>
+      <div class="subtitle">BOBRUISK • РОЗЫГРЫШ</div>
+    </div>
+
+    <div class="content">
+      <label for="names">Список участников (по одному нику на строку)</label>
+      <textarea id="names" placeholder="@user1&#10;@user2&#10;@user3&#10;..."></textarea>
+
+      <div class="controls">
+        <label>
+          Количество победителей:
+          <input type="number" id="count" value="5" min="1" max="50">
+        </label>
+      </div>
+
+      <div class="stats" id="stats">Участников: 0 (уникальных: 0)</div>
+
+      <button class="btn" onclick="pickWinners()">🎲 Выбрать победителей</button>
+      <button class="btn btn-secondary" onclick="clearAll()">Очистить</button>
+
+      <div class="winners-box" id="winnersBox">
+        <h2>🏆 Победители</h2>
+        <div id="winnersList"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    BOBR TESTIT • Bobruisk<br>
+    <a href="https://instagram.com/" target="_blank">Наш Instagram</a>
+  </div>
+
+  <script>
+    const textarea = document.getElementById('names');
+    const stats = document.getElementById('stats');
+    const winnersBox = document.getElementById('winnersBox');
+    const winnersList = document.getElementById('winnersList');
+    const countInput = document.getElementById('count');
+
+    // Обновляем статистику при вводе
+    textarea.addEventListener('input', updateStats);
+
+    function getUniqueNames() {
+      const raw = textarea.value
+        .split(/[\n,;]+/)
+        .map(s => s.trim().replace(/^@/, ''))
+        .filter(s => s.length > 0);
+
+      // Уникальные (без учёта регистра)
+      const seen = new Set();
+      const unique = [];
+      for (const name of raw) {
+        const lower = name.toLowerCase();
+        if (!seen.has(lower)) {
+          seen.add(lower);
+          unique.push(name);
+        }
+      }
+      return unique;
+    }
+
+    function updateStats() {
+      const raw = textarea.value
+        .split(/[\n,;]+/)
+        .map(s => s.trim())
+        .filter(s => s.length > 0);
+      const unique = getUniqueNames();
+      stats.textContent = `Участников: ${raw.length} (уникальных: ${unique.length})`;
+    }
+
+    function pickWinners() {
+      const unique = getUniqueNames();
+      const count = parseInt(countInput.value) || 5;
+
+      if (unique.length === 0) {
+        alert('Сначала вставь список участников!');
+        return;
+      }
+
+      if (count > unique.length) {
+        alert(`Уникальных участников только ${unique.length}. Нельзя выбрать больше.`);
+        return;
+      }
+
+      // Перемешиваем (Fisher-Yates)
+      const shuffled = [...unique];
+      for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+      }
+
+      const winners = shuffled.slice(0, count);
+
+      // Показываем с анимацией
+      winnersList.innerHTML = '';
+      winnersBox.style.display = 'block';
+
+      winners.forEach((name, index) => {
+        const div = document.createElement('div');
+        div.className = 'winner-item';
+        div.style.animationDelay = `${index * 0.15}s`;
+        div.textContent = `${index + 1}. @${name}`;
+        winnersList.appendChild(div);
+      });
+
+      // Прокрутка к результатам
+      winnersBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    function clearAll() {
+      textarea.value = '';
+      winnersBox.style.display = 'none';
+      winnersList.innerHTML = '';
+      updateStats();
+    }
+
+    // Инициализация
+    updateStats();
+  </script>
+</body>
+</html>
