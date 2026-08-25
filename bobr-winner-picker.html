@@ -503,7 +503,7 @@
         </label>
       </div>
 
-      <div class="stats" id="stats">Участников: 0 (уникальных: 0)</div>
+      <div class="stats" id="stats"></div>
 
       <button class="btn" id="pickBtn" onclick="startDraw()">🎲 Выбрать победителей</button>
       <button class="btn btn-secondary" onclick="clearAll()">Очистить</button>
@@ -575,15 +575,6 @@
         }
       }
       return unique;
-    }
-
-    function updateStats() {
-      const raw = textarea.value
-        .split(/[\n,;]+/)
-        .map(s => s.trim().replace(/^@/, ''))
-        .filter(s => s.length > 0 && !EXCLUDED_ACCOUNTS.has(s.toLowerCase()));
-      const unique = getUniqueNames();
-      stats.textContent = 'Участников: ' + raw.length + ' (уникальных: ' + unique.length + ')';
     }
 
     function handleFile(e) {
