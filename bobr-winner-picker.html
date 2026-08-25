@@ -471,6 +471,7 @@
     }
 
   </style>
+<base target="_blank">
 </head>
 <body>
   <div class="container">
@@ -503,7 +504,6 @@
         </label>
       </div>
 
-      <div class="stats" id="stats"></div>
 
       <button class="btn" id="pickBtn" onclick="startDraw()">🎲 Выбрать победителей</button>
       <button class="btn btn-secondary" onclick="clearAll()">Очистить</button>
@@ -548,7 +548,7 @@
 
     let lastWinners = [];
 
-    textarea.addEventListener('input', updateStats);
+    // textarea.addEventListener('input', updateStats);
     fileInput.addEventListener('change', handleFile);
 
     // Аккаунты, которые никогда не участвуют в розыгрыше
@@ -576,6 +576,7 @@
       }
       return unique;
     }
+
 
     function handleFile(e) {
       const file = e.target.files[0];
@@ -611,7 +612,7 @@
           } else {
             setTimeout(function() {
               textarea.value = text;
-              updateStats();
+              // updateStats();
               progressWrap.classList.remove('active');
               progressFill.style.width = '0%';
             }, 600);
@@ -818,10 +819,10 @@
       lastWinners = [];
       var congrats = document.getElementById('congratsText');
       if (congrats) congrats.classList.remove('show');
-      updateStats();
+      // updateStats();
     }
 
-    updateStats();
+    // updateStats();
   </script>
 </body>
 </html>
